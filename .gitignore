@@ -1,0 +1,8 @@
+# Ignore all device certs/keys, except the public AWS root CA.
+main/certs/*
+!main/certs/aws_root_ca.pem
+
+# ESP-IDF build outputs and local config
+build/
+sdkconfig
+sdkconfig.old
