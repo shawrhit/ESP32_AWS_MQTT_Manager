@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <Arduino.h>
-#include "mqtt_manager.h"
+#include "ESP32_AWS_MQTT_Manager.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
