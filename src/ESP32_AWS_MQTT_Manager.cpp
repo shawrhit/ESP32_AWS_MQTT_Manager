@@ -4,21 +4,15 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
-
-// Arduino core includes (replaces some ESP-IDF specific ones)
 #include <Arduino.h>
-
 #include "mqtt_manager.h"
-
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 #include "freertos/queue.h"
-
 #include "lwip/sockets.h"
 #include "lwip/dns.h"
 #include "lwip/netdb.h"
-
 #include "esp_log.h"
 #include "mqtt_client.h"
 

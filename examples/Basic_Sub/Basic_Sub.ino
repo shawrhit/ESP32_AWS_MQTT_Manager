@@ -1,7 +1,7 @@
 #include <WiFi.h>
 #include <time.h>
 #include "esp_log.h" // Exposes hidden system logs for troubleshooting
-#include "mqtt_manager.h"
+#include "ESP32_AWS_MQTT_Manager.h" // Core MQTT Manager Library
 #include "aws_certs.h" // This contains all your certificates and must be in the same folder as this sketch
 
 // ===================================================
