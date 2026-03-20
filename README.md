@@ -20,7 +20,7 @@ Currently tested and verified working on:
 ## Installation
 
 ### Method 1: Arduino Library Manager (Recommended)
-[Image of Arduino IDE Library Manager interface showing library search]
+
 1. Open the Arduino IDE.
 2. Go to **Tools** -> **Manage Libraries...**
 3. Search for **ESP32 AWS MQTT Manager**.
@@ -56,4 +56,17 @@ See the `examples/` folder for complete, copy-pasteable implementations of Publi
 You are trying to compile for a non-ESP32 board. Go to **Tools** -> **Board** and select your specific ESP32 model.
 
 ### Error: "MQTT Queue is FULL!" or Messages Not Appearing in AWS
-If your publish attempts return an `ESP_ERR_NO_MEM` code, your ESP3
+If your publish attempts return an `ESP_ERR_NO_MEM` code, your ESP32 is failing to connect to AWS and the internal queue (8 slots) has filled up. This is almost always caused by one of three things:
+* **Inactive Certificate:** Ensure you clicked "Activate" on your certificate in the AWS IoT Core console.
+* **Missing Policy:** Ensure your certificate has an AWS IoT Policy attached that explicitly allows `iot:Connect` and `iot:Publish` for your specific client ID and topics.
+* **Wrong Endpoint:** Ensure your `aws_endpoint` includes `-ats` in the URL (e.g., `mqtts://YOUR_ID-ats.iot.REGION.amazonaws.com:8883`).
+
+### Silent Connection Failures
+By default, the Arduino IDE hides the underlying ESP-IDF system logs. To see the raw TLS handshake errors:
+1. Go to **Tools** -> **Core Debug Level**.
+2. Change it to **Info** or **Verbose**.
+3. Ensure `esp_log_level_set("esp-tls", ESP_LOG_INFO);` is in your `setup()` function.
+4. Re-upload and watch the Serial Monitor after the time synchronization step.
+
+### Infinite Loop on "Syncing time via NTP..."
+AWS TLS certificates require an accurate system clock to validate expiration dates. If the device cannot reach the NTP server, it cannot connect to AWS. Ensure your Wi-Fi network allows outbound UDP port 123 traffic, or try snapping on the external Wi-Fi antenna if your board (like the ESP32-C3) requires one.
